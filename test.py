@@ -56,6 +56,21 @@ class Model1() :
         decimal = sum(bit * (2 ** i) for i, bit  in enumerate(reversed(self.X)))
         if(decimal<self.L2_NODE_NUM) : self.Y[int(decimal)] = 1
 
+    def update(self, eta):
+        # W2
+        for i in range(self.L1_NODE_NUM):
+            for j in range(self.L2_NODE_NUM):
+                self.W2[i][j] -= eta*(self.Y[j]-self.L2[j])*self.L1[i]
+        # B2
+        for j in range(self.L2_NODE_NUM):
+            self.B2[j] -= eta*(self.Y[j]-self.L2[j])
+
+        self.Calc()
+
+
+
+        return
+
     def ReLU(self,x) :
         if x<0: return 0
         else  : return x
@@ -65,7 +80,7 @@ class Model1() :
         print("-------- L 1 --------\n","--- w1 ---\n",self.W1,"\n--- b1 ---\n",self.B1,"\n--- L1 ---\n",self.L1,"\n")
         print("-------- L 2 --------\n","--- w2 ---\n",self.W2,"\n--- b2 ---\n",self.B2,"\n--- L2 ---\n",self.L2,"\n")
         print("--------output--------\n",self.Y)
-    
+
 
 # main
 
